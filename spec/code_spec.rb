@@ -1,8 +1,19 @@
 RSpec.describe Code do
-
   it 'should contain the secret code' do
     code = Code.new("6543")
     expect(code.secret).to eq("6543")
+  end
+
+  it 'raise error on incorrect codes' do
+    expect {Code.new("1234")}.not_to raise_error
+    expect {Code.new("12345")}.to raise_error(ArgumentError)
+    expect {Code.new("123")}.to raise_error(ArgumentError)
+  end
+
+  describe "#random" do
+    it 'should generate random codes that matches pattern' do
+      expect{ Code.new }.not_to raise_error
+    end
   end
 
   describe "#compare" do
@@ -50,6 +61,4 @@ RSpec.describe Code do
       end
     end
   end
-
-
 end
