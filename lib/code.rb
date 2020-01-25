@@ -5,6 +5,8 @@ class Code
     raise ArgumentError unless secret.to_s.match?(/^[1-6]{4}$/)
 
     @secret = secret.to_s
+    @shuffle = @secret.each_char.to_a.shuffle
+    @hint_idx = 0
   end
 
   def compare(guess)
@@ -15,6 +17,13 @@ class Code
     bulls2, cows2 = bulls_and_cows(guess, @secret)
 
     '+' * [bulls1, bulls2].min + '-' * [cows1, cows2].min
+  end
+
+  def hint
+    result = @shuffle[@hint_idx]
+    @hint_idx += 1
+    @hint_idx = 0 if @hint_idx >= @shuffle.size
+    result
   end
 
   def self.random

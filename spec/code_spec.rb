@@ -18,12 +18,12 @@ RSpec.describe Code do
     end
   end
 
-  # describe '#hint' do
-  #   it 'gave one number of secret code' do
-  #     code = Code.new
-  #     expect { code.secret.include? code.hint }.to be_truthy
-  #   end
-  # end
+  describe '#hint' do
+    it 'gave one number of secret code' do
+      code = Code.new
+      expect(code.secret.include?(code.hint)).to be_truthy
+    end
+  end
 
   describe '#compare' do
     test_compare = {
