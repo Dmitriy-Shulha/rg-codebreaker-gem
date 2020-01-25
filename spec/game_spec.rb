@@ -29,10 +29,6 @@ RSpec.describe Game do
 
       expect(easy_game.attempts_total).to eq(15)
       expect(easy_game.hints_total).to eq(2)
-
-      expect(easy_game.attempts).to eq(15)
-      expect(easy_game.hints).to eq(2)
-
     end
 
     it "has 'medium' difficulty" do
@@ -42,9 +38,6 @@ RSpec.describe Game do
 
       expect(medium_game.attempts_total).to eq(10)
       expect(medium_game.hints_total).to eq(1)
-
-      expect(medium_game.attempts).to eq(10)
-      expect(medium_game.hints).to eq(1)
     end
 
     it "has 'hell' difficulty" do
@@ -54,9 +47,71 @@ RSpec.describe Game do
 
       expect(hell_game.attempts_total).to eq(5)
       expect(hell_game.hints_total).to eq(1)
-
-      expect(hell_game.attempts).to eq(5)
-      expect(hell_game.hints).to eq(1)
     end
+
+    it "has zero used attempts and hints by default" do
+      game = Game.new
+      expect(game.attempts_used).to eq(0)
+      expect(game.hints_used).to eq(0)
+    end
+
+  end
+
+  describe '#gameplay' do
+    it 'have play status' do
+      game = Game.new
+      expect(Game::STATUS).to eq([:go_on, :over])
+      expect(Game::OUTCOME).to eq([:win, :lose])
+      expect(game.status).to be(:go_on)
+      expect(game.outcome).to be_nil
+    end
+
+    let(:test_easy_win) { {
+        secret: "6543",
+        guess: {
+            "2222" => "",
+            "2666" => "-",
+            "6666" => "+",
+            "6411" => "+-",
+            "3456" => "----",
+            "5643" => "++--",
+            "6543" => "++++",
+        }
+    } }
+    it 'have win condition' do
+      game = Game.new("Secret", :easy, test_easy_win[:secret])
+      test_easy_win[:guess].each do |code, answer|
+        expect(game.attempt(code)).to eq(answer)
+      end
+      expect(game.attempts_used).to eq(7)
+      expect(game.status).to be(:over)
+      expect(game.outcome).to be(:win)
+    end
+
+    let(:test_hell_lose) { {
+        secret: "6543",
+        guess: {
+            "2222" => "",
+            "2666" => "-",
+            "6666" => "+",
+            "6411" => "+-",
+            "3456" => "----",
+        }
+    } }
+    it 'have lose condition' do
+      game = Game.new("Secret", :hell, test_hell_lose[:secret])
+      test_hell_lose[:guess].each do |code, answer|
+        expect(game.attempt(code)).to eq(answer)
+      end
+      expect(game.attempts_used).to eq(5)
+      expect(game.status).to be(:over)
+      expect(game.outcome).to be(:lose)
+    end
+  end
+
+  it 'should have tries' do
+  end
+
+  it 'should have hints' do
   end
 end
