@@ -59,6 +59,18 @@ class Game
     end
   end
 
+  def hint
+    case @status
+    when :go_on
+      raise StandardError, 'No hints left' if @hints_used >= hints_total
+
+      @hints_used += 1
+      @code.hint
+    when :over
+      raise StandardError 'The game is over.'
+    end
+  end
+
   private
 
   def check_win(answer)

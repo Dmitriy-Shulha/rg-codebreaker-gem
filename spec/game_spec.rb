@@ -114,7 +114,14 @@ RSpec.describe Game do
   end
 
   describe '#hints' do
-    it 'should have hints' do
+    it 'have limited amount of hints' do
+      Game::DIFFICULTIES.each do |level|
+        game = Game.new('HintUser', level.first, '1234')
+        game.hints_total.times do
+          expect(game.hint).to match(/^[0-9]$/)
+        end
+        expect { game.hint }.to raise_error(StandardError)
+      end
     end
   end
 end
