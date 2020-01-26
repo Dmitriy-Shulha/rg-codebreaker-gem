@@ -1,8 +1,10 @@
 class Code
+  include Validation
+
   attr_reader :secret
 
   def initialize(secret = Code.random)
-    raise ArgumentError unless secret.to_s.match?(/^[1-6]{4}$/)
+    validate_code secret
 
     @secret = secret.to_s
     @shuffle = @secret.each_char.to_a.shuffle

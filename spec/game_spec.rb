@@ -120,8 +120,9 @@ RSpec.describe Game do
         game.hints_total.times do
           expect(game.hint).to match(/^[0-9]$/)
         end
-        expect { game.hint }.to raise_error(StandardError)
+        expect { game.hint }.to raise_error(NoHintsError)
       end
     end
   end
+
 end

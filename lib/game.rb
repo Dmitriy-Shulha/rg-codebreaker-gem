@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Game
+  include Validation
+
   STATUS = %i[go_on over].freeze
   OUTCOME = %i[win lose].freeze
   DIFFICULTIES = {
@@ -23,8 +25,8 @@ class Game
   attr_reader :status, :outcome
 
   def initialize(name = 'User1', difficulty = :easy, secret = Code.random)
-    raise ArgumentError, 'No such difficulty' unless %i[easy medium hell].include? difficulty.to_s.to_sym
-    raise ArgumentError, 'Incorrect username' unless name.to_s.match?(/^[0-9a-zA-Z]{3,20}$/)
+    validate_name name
+    validate_difficulty difficulty
 
     @name = name.to_s
     @difficulty = difficulty.to_sym
@@ -55,19 +57,19 @@ class Game
       check_lose
       answer
     when :over
-      raise StandardError 'The game is over.'
+      raise GameOverError
     end
   end
 
   def hint
     case @status
     when :go_on
-      raise StandardError, 'No hints left' if @hints_used >= hints_total
+      raise NoHintsError if @hints_used >= hints_total
 
       @hints_used += 1
       @code.hint
     when :over
-      raise StandardError 'The game is over.'
+      raise GameOverError
     end
   end
 
