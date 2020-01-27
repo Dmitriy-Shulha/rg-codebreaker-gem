@@ -88,6 +88,7 @@ RSpec.describe Game do
       expect(game.attempts_used).to eq(7)
       expect(game.status).to be(:over)
       expect(game.outcome).to be(:win)
+      expect(game.rating).to be(130)
     end
 
     let(:test_hell_lose) do
@@ -110,6 +111,7 @@ RSpec.describe Game do
       expect(game.attempts_used).to eq(5)
       expect(game.status).to be(:over)
       expect(game.outcome).to be(:lose)
+      expect(game.rating).to eq(0)
     end
   end
 

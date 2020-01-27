@@ -7,14 +7,17 @@ class Game
   OUTCOME = %i[win lose].freeze
   DIFFICULTIES = {
     easy: {
+      score: 200,
       attempts_total: 15,
       hints_total: 2
     },
     medium: {
+      score: 400,
       attempts_total: 10,
       hints_total: 1
     },
     hell: {
+      score: 600,
       attempts_total: 5,
       hints_total: 1
     }
@@ -70,6 +73,27 @@ class Game
       @code.hint
     when :over
       raise GameOverError
+    end
+  end
+
+  def game_data
+    {
+      rating: rating,
+      name: name,
+      difficulty: difficulty.to_s,
+      attempts_total: attempts_total,
+      attempts_used: attempts_used,
+      hints_total: hints_total,
+      hints_used: hints_used
+    }
+  end
+
+  def rating
+    case outcome
+    when :win
+      DIFFICULTIES[difficulty][:score] - 10*attempts_used - hints_used
+    else
+      0
     end
   end
 
