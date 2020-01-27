@@ -91,7 +91,7 @@ class Game
   def rating
     case outcome
     when :win
-      DIFFICULTIES[difficulty][:score] - 10*attempts_used - hints_used
+      DIFFICULTIES[difficulty][:score] - 10 * attempts_used - hints_used
     else
       0
     end
