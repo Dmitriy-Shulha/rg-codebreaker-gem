@@ -7,3 +7,7 @@ require 'statistics'
 
 require 'code'
 require 'game'
+require 'constants'
+
+require 'codebreaker/version'
+require 'codebreaker'

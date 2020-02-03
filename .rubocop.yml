@@ -1,6 +1,9 @@
 AllCops:
   Exclude:
     - 'Gemfile'
+    - 'codebreaker.gemspec'
+Layout/FirstHashElementIndentation:
+  Enabled: false
 Style/FrozenStringLiteralComment:
   Enabled: false
 Style/Documentation:
@@ -13,4 +16,7 @@ Metrics/BlockLength:
   Exclude:
     - 'Rakefile'
     - '**/*.rake'
+    - 'spec/**/*.rb'
+Metrics/ModuleLength:
+  Exclude:
     - 'spec/**/*.rb'
