@@ -90,6 +90,7 @@ module Codebreaker
         expect(game.status).to be(:over)
         expect(game.outcome).to be(:win)
         expect(game.rating).to be(130)
+        expect { game.attempt(1234) }.to raise_error(Validation::GameOverError)
       end
 
       let(:test_hell_lose) do
@@ -113,6 +114,7 @@ module Codebreaker
         expect(game.status).to be(:over)
         expect(game.outcome).to be(:lose)
         expect(game.rating).to eq(0)
+        expect { game.attempt(1234) }.to raise_error(Validation::GameOverError)
       end
     end
 
@@ -123,7 +125,7 @@ module Codebreaker
           game.hints_total.times do
             expect(game.hint).to match(/^[0-9]$/)
           end
-          expect { game.hint }.to raise_error(NoHintsError)
+          expect { game.hint }.to raise_error(Validation::NoHintsError)
         end
       end
     end
