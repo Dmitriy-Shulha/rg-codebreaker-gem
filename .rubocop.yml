@@ -1,0 +1,22 @@
+AllCops:
+  Exclude:
+    - 'Gemfile'
+    - 'codebreaker.gemspec'
+Layout/FirstHashElementIndentation:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Layout/LineLength:
+  Max: 120
+Metrics/MethodLength:
+  Max: 15
+Metrics/BlockLength:
+  Exclude:
+    - 'Rakefile'
+    - '**/*.rake'
+    - 'spec/**/*.rb'
+Metrics/ModuleLength:
+  Exclude:
+    - 'spec/**/*.rb'
